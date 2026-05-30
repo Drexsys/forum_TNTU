@@ -1,0 +1,24 @@
+services:
+  backend:
+    image: forum_tntu:1.0.0
+    build: ./forum_tntu
+    env_file:
+      - .env
+    depends_on:
+      - database
+    ports:
+      - 8000:8000
+
+  database:
+    image: postgres:16-alpine
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+    container_name: bd
+
+volumes:
+  postgres_data:
+    name: forum_tntu_data
