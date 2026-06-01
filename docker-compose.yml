@@ -19,6 +19,16 @@ services:
       - 5433:5432
     container_name: bd
 
+  frontend:
+    build: ./forum-app-frontend
+      # context: .
+      # dockerfile: Dockerfile.dev
+    ports:
+      - 8080:3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+
 volumes:
   postgres_data:
     name: forum_tntu_data
