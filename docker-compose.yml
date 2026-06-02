@@ -20,13 +20,11 @@ services:
     container_name: bd
 
   frontend:
-    build: ./forum-app-frontend
-      # context: .
-      # dockerfile: Dockerfile.dev
+    build: ./frontend
     ports:
       - 8080:3000
     volumes:
-      - .:/app
+      - ./frontend:/app
       - /app/node_modules
 
 volumes:

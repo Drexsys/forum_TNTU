@@ -35,7 +35,7 @@ public class UserController {
 
     }
 
-    @GetMapping
+    @PostMapping("/login")
     public ResponseEntity<?> registerUser(
             @RequestBody UserDto body
             ) {
