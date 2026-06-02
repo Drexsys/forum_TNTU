@@ -21,6 +21,10 @@ public class User {
         this.passwordHash = password.hashCode();
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public int getPasswordHash() {
         return passwordHash;
     }

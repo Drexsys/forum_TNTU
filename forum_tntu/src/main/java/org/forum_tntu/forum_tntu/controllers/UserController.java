@@ -1,5 +1,6 @@
 package org.forum_tntu.forum_tntu.controllers;
 
+import org.forum_tntu.forum_tntu.dto.UserDto;
 import org.forum_tntu.forum_tntu.models.User;
 import org.forum_tntu.forum_tntu.repositories.UserRepository;
 
@@ -15,28 +16,48 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    private class UserResponce {
+
+        private Long id;
+        private String username;
+
+        public UserResponce(Long id, String username) {
+            this.id = id;
+            this.username = username;
+        }
+
+        public Long getId() {
+            return id;
+        }
+        public String getUsername() {
+            return username;
+        }
+
+    }
+
     @GetMapping
-    public ResponseEntity<String> registerUser(
-            @RequestParam String username,
-            @RequestParam String password
-    ) {
-        User user = userRepository.findByUsernameAndPasswordHash(username, password.hashCode());
+    public ResponseEntity<?> registerUser(
+            @RequestBody UserDto body
+            ) {
+        User user = userRepository.findByUsernameAndPasswordHash(body.getUsername(),
+                body.getPassword().hashCode());
         if (user == null)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong username or password");
 
-        return ResponseEntity.ok("");
+        return ResponseEntity.ok(new UserResponce(user.getId(), user.getUsername()));
     }
 
     @PostMapping
-    public ResponseEntity<String> loginUser(
-            @RequestParam String username,
-            @RequestParam String password
+    public ResponseEntity<?> loginUser(
+            @RequestBody UserDto body
     ) {
         if (userRepository.count() > 0)
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
 
-        userRepository.save(new User(username, password));
-        return ResponseEntity.status(HttpStatus.CREATED).body("User created successfully");
+        var user = new User(body.getUsername(), body.getPassword());
+        userRepository.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                new UserResponce(user.getId(), user.getUsername()));
     }
 
     @GetMapping("/count")
