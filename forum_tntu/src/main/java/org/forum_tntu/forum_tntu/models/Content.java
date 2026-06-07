@@ -39,4 +39,8 @@ public abstract class Content {
     public String getText() {
         return text;
     }
+
+    public User getAuthor() {
+        return author;
+    }
 }

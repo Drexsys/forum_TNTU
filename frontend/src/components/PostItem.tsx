@@ -41,6 +41,7 @@ export default function PostItem({ post, currentUser }: PostItemProps) {
   return (
     <div className={styles.post}>
       <div className={styles.header}>
+        <h2 className={styles.title}>{post.author.username}</h2>
         <h2 className={styles.title}>{post.title}</h2>
         <span className={styles.date}>{formatDate(post.createdAt)}</span>
       </div>

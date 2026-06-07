@@ -18,6 +18,7 @@ export default function CommentsList({ comments }: CommentsListProps) {
       {comments.map((comment) => (
         <div key={comment.id} className={styles.comment}>
           <div className={styles.commentHeader}>
+  	    <span className={styles.title}><b>{comment.author.username} </b></span>
             <span className={styles.commentDate}>{formatDate(comment.createdAt)}</span>
           </div>
           <p className={styles.commentText}>{comment.text}</p>

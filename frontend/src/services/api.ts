@@ -10,12 +10,14 @@ export interface Post {
   title: string;
   text: string;
   createdAt: string;
+  author: User;
 }
 
 export interface Comment {
   id: number;
   text: string;
   createdAt: string;
+  author: User;
 }
 
 // User endpoints
