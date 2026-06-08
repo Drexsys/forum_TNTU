@@ -51,8 +51,8 @@ public class UserController {
     public ResponseEntity<?> loginUser(
             @RequestBody UserDto body
     ) {
-        if (userRepository.count() > 0)
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
+//        if (userRepository.count() > 0)
+//            return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
 
         var user = new User(body.getUsername(), body.getPassword());
         userRepository.save(user);
