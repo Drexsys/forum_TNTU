@@ -2,6 +2,8 @@ package org.forum_tntu.forum_tntu.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 @MappedSuperclass
 public abstract class Content {
@@ -11,7 +13,7 @@ public abstract class Content {
     private Long id;
 
     @Column(nullable = false, updatable = false)
-    private final LocalDateTime createdAt = LocalDateTime.now();
+    private ZonedDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
@@ -26,13 +28,17 @@ public abstract class Content {
     protected Content(User author, String text) {
         this.author = author;
         this.text = text;
+
+        var zoneId = ZoneId.of("Europe/Kyiv");
+        var timeTmp = LocalDateTime.now();
+        createdAt = timeTmp.atZone(zoneId);
     }
 
     public Long getId() {
         return id;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public ZonedDateTime getCreatedAt() {
         return createdAt;
     }
 
